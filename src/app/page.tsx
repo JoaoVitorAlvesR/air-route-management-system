@@ -1,3 +1,4 @@
+import { CartesianPlan } from "@/components/cartesianPlan/cartesianPlan";
 import DataGrid from "./dataGrid/page";
 import InputData from "./inputData/page";
 import Radar from "./radar/page";
@@ -18,9 +19,11 @@ export default function Home() {
           <TrackingFunctions />
         </div>
         <div className="flex gap-10">
-          <Radar />
           <DataGrid />
           <Report />
+        </div>
+        <div>
+          <Radar />
         </div>
       </div>
     </>
