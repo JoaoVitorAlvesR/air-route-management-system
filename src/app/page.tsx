@@ -6,6 +6,8 @@ import Report from "./report/page";
 
 import TrackingFunctions from "./trackingFunctions/page";
 import TransformationFunctions from "./transformationFunctions/page";
+import Image from "next/image";
+import Airplane from "../icons/airplane.png";
 
 export default function Home() {
   return (
@@ -23,6 +25,12 @@ export default function Home() {
           <Report />
         </div>
         <div>
+          <Image
+            src={Airplane}
+            alt="Descrição da imagem"
+            width={100}
+            height={100}
+          />
           <Radar />
         </div>
       </div>

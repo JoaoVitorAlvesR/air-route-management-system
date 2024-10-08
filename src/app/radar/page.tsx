@@ -9,9 +9,11 @@ export default function Radar({ coordinates }: any) {
       <ContainerPanel>
         <CartesianPlan
           coordinates={[
-            { x: 10, y: 20 },
-            { x: 15, y: 10 },
-            { x: 30, y: 40 },
+            { x: 0, y: 0 },
+            { x: 15, y: 15 },
+            { x: 5, y: -5 },
+            { x: -5, y: 5 },
+            { x: -5, y: -5 },
           ]}
         />
       </ContainerPanel>
