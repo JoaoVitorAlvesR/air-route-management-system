@@ -7,20 +7,20 @@ export default function TrackingFunctions() {
   return (
     <div className="flex flex-col gap-2">
       <h1 className="text-2xl">Funções de rastreamento</h1>
-      <div className="flex gap-2">
-        <ContainerPanel>
-          <div className="flex gap-12">
-            <div className="flex flex-col gap-2 items-end">
-              <div>
-                Distância Mínima:{" "}
-                <InputNumber value={minDistance} onChange={setMinDistance} />
-              </div>
+      <ContainerPanel>
+        <div className="flex gap-12">
+          <div className="flex flex-col gap-2 items-end">
+            <div>
+              Distância Mínima:{" "}
+              <InputNumber value={minDistance} onChange={setMinDistance} />
             </div>
           </div>
-          <button className="bg-purple-950 text-white rounded-lg p-2">
-            Aviões próximos ao aeroporto
-          </button>
-        </ContainerPanel>
+        </div>
+        <button className="bg-purple-950 text-white rounded-lg p-2">
+          Aviões próximos ao aeroporto
+        </button>
+      </ContainerPanel>
+      <div className="flex gap-2">
         <ContainerPanel>
           <div className="flex gap-12">
             <div className="flex flex-col gap-2 items-end">

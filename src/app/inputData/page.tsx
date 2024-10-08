@@ -1,53 +1,87 @@
 "use client";
 import { ContainerPanel, InputNumber } from "@/components";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useData } from "../../context/dataProvider";
 
 export default function InputData() {
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
-  const [radius, setRadius] = useState(0);
-  const [angle, setAngle] = useState(0);
-  const [speed, setSpeed] = useState(0);
-  const [direction, setDirection] = useState(0);
+  const { x, setX } = useData();
+  const { y, setY } = useData();
+  const { radius, setRadius } = useData();
+  const { angle, setAngle } = useData();
+  const { speed, setSpeed } = useData();
+  const { direction, setDirection } = useData();
+
+  const { dataAirplane, setDataAirplane } = useData();
+
+  const [typeCoordinates, setTypeCoordinates] = useState(false);
 
   const handleInsert = () => {
-    console.log("Inserting data");
-    console.log("x:", x);
-    console.log("y:", y);
-    console.log("radius:", radius);
-    console.log("angle:", angle);
-    console.log("speed:", speed);
-    console.log("direction:", direction);
+    const typeData = () => {
+      return !typeCoordinates ? { x, y } : { radius, angle };
+    };
+    setDataAirplane([
+      ...dataAirplane,
+      {
+        id: dataAirplane.length,
+
+        direction,
+        speed,
+        ...typeData(),
+      },
+    ]);
+    console.log([...dataAirplane, { x, y, direction, speed, radius, angle }]);
+  };
+
+  const handleCheckboxChange = () => {
+    setTypeCoordinates(!typeCoordinates);
   };
 
   return (
     <div className="flex flex-col gap-2">
       <h1 className="text-2xl">Entrada de dados</h1>
       <ContainerPanel>
+        <label>
+          <input
+            type="checkbox"
+            checked={typeCoordinates}
+            onChange={handleCheckboxChange}
+          />
+          {!typeCoordinates
+            ? "Entrada com raio e ângulo"
+            : "Entrada com seno e cosseno"}
+        </label>
         <div className="flex gap-12">
           <div className="flex flex-col gap-2 items-end">
-            <div>
-              X: <InputNumber value={x} onChange={setX} />
-            </div>
-            <div>
-              Raio:
-              <InputNumber value={y} onChange={setY} />
-            </div>
+            {!typeCoordinates ? (
+              <div>
+                X: <InputNumber value={x} onChange={setX} />
+              </div>
+            ) : (
+              <div>
+                Raio:
+                <InputNumber value={radius} onChange={setRadius} />
+              </div>
+            )}
+
             <div>
               Velocidade:
-              <InputNumber value={radius} onChange={setRadius} />
+              <InputNumber value={speed} onChange={setSpeed} />
             </div>
           </div>
 
           <div className="flex flex-col gap-2 items-end">
-            <div>
-              Y: <InputNumber value={angle} onChange={setAngle} />
-            </div>
-            <div>
-              Ângulo:
-              <InputNumber value={speed} onChange={setSpeed} />
-            </div>
+            {!typeCoordinates ? (
+              <div>
+                Y: <InputNumber value={y} onChange={setY} />
+              </div>
+            ) : (
+              <div>
+                Ângulo:
+                <InputNumber value={angle} onChange={setAngle} />
+              </div>
+            )}
+
             <div>
               Direção:
               <InputNumber value={direction} onChange={setDirection} />
@@ -56,7 +90,7 @@ export default function InputData() {
         </div>
         <button
           onClick={handleInsert}
-          className="bg-purple-950 text-white rounded-lg p-2"
+          className={"bg-purple-950 text-white rounded-lg p-2"}
         >
           Inserir
         </button>

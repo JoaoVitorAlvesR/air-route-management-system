@@ -12,9 +12,7 @@ import {
 
 import { Scatter } from "react-chartjs-2";
 
-import Image from "next/image";
-import Airplane from "../../icons/airplane.png";
-import Bird from "../../icons/twitter.svg";
+import Airplane from "../../icons/airplane2.png";
 import { useEffect, useState } from "react";
 
 ChartJS.register(
@@ -28,7 +26,7 @@ ChartJS.register(
 );
 
 interface CartesianPlanProps {
-  coordinates: { x: number; y: number }[];
+  coordinates: { x: number; y: number; direction: number }[];
 }
 
 export const CartesianPlan = ({ coordinates }: CartesianPlanProps) => {
@@ -37,22 +35,39 @@ export const CartesianPlan = ({ coordinates }: CartesianPlanProps) => {
   const yMin = Math.min(...coordinates.map((coord) => coord.y)) - 10;
   const yMax = Math.max(...coordinates.map((coord) => coord.y)) + 10;
 
+  const [airplaneImage, setAirplaneImage] = useState<HTMLImageElement | null>(
+    null
+  );
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = Airplane.src;
+    img.onload = () => {
+      setAirplaneImage(img);
+    };
+  }, []);
+
   const chartData = {
     datasets: [
       {
-        label: "Scatter Dataset",
         data: coordinates,
         backgroundColor: "#000",
-        rotation: 45,
+        rotation: ({ raw }) => {
+          console.log(raw.direction);
+          return 360 - raw.direction;
+        },
         borderWidth: false,
         showLine: false,
         pointRadius: 10,
-        pointStyle: "triangle",
+        hoverRadius: 10,
+        pointStyle: (context: { dataIndex: number }) =>
+          context.dataIndex === 0 ? "circle" : airplaneImage,
       },
     ],
   };
 
   const options = {
+    aspectRatio: 1,
     responsive: true,
     plugins: {
       legend: {
@@ -62,14 +77,18 @@ export const CartesianPlan = ({ coordinates }: CartesianPlanProps) => {
         display: false,
       },
     },
+    interaction: {
+      mode: "nearest",
+      intersect: false,
+    },
     scales: {
       x: {
         type: "linear",
         position: "bottom",
-        min: xMin, // Definir o valor mínimo para o eixo X
-        max: xMax, // Definir o valor máximo para o eixo X
+        min: xMin,
+        max: xMax,
         ticks: {
-          padding: 15, // Espaçamento extra entre a label e os dados no eixo X
+          padding: 15,
         },
         grid: {
           color: (ctx) => (ctx.tick.value === 0 ? "#59b672" : "#000"),
@@ -77,10 +96,10 @@ export const CartesianPlan = ({ coordinates }: CartesianPlanProps) => {
       },
       y: {
         type: "linear",
-        min: yMin, // Definir o valor mínimo para o eixo Y
-        max: yMax, // Definir o valor máximo para o eixo Y
+        min: yMin,
+        max: yMax,
         ticks: {
-          padding: 15, // Espaçamento extra entre a label e os dados no eixo Y
+          padding: 15,
         },
         grid: {
           color: (ctx) => (ctx.tick.value === 0 ? "#59b672" : "#000"),
