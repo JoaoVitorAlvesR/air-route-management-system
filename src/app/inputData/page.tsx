@@ -1,59 +1,87 @@
 "use client";
 import { ContainerPanel, InputNumber } from "@/components";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useData } from "../../context/dataProvider";
+import CoordinatesConversion from "@/utils/coordinatesConversion";
 
 export default function InputData() {
-  const { x, setX } = useData();
-  const { y, setY } = useData();
-  const { radius, setRadius } = useData();
-  const { angle, setAngle } = useData();
-  const { speed, setSpeed } = useData();
-  const { direction, setDirection } = useData();
+  const {
+    x,
+    setX,
+    y,
+    setY,
+    radius,
+    setRadius,
+    angle,
+    setAngle,
+    speed,
+    setSpeed,
+    direction,
+    setDirection,
+    dataAirplane,
+    setDataAirplane,
+  } = useData();
 
-  const { dataAirplane, setDataAirplane } = useData();
-
-  const [typeCoordinates, setTypeCoordinates] = useState(false);
+  const [cartesianInput, setCartesianInput] = useState(true);
+  const [polarInput, setPolarInput] = useState(false);
 
   const handleInsert = () => {
-    const typeData = () => {
-      return !typeCoordinates ? { x, y } : { radius, angle };
-    };
+    const insetData = cartesianInput ? { x, y } : { radius, angle };
+
+    const completeCoordinates = CoordinatesConversion(
+      insetData,
+      cartesianInput
+    );
     setDataAirplane([
       ...dataAirplane,
       {
         id: dataAirplane.length,
-
         direction,
         speed,
-        ...typeData(),
+        ...completeCoordinates,
       },
     ]);
-    console.log([...dataAirplane, { x, y, direction, speed, radius, angle }]);
+    setX;
+    setY;
+    setRadius;
+    setAngle;
   };
 
-  const handleCheckboxChange = () => {
-    setTypeCoordinates(!typeCoordinates);
+  const handleCheckboxChange = (stringType: string) => {
+    if (stringType === "cartesian") {
+      setCartesianInput(true);
+      setPolarInput(false);
+    } else if (stringType === "polar") {
+      setCartesianInput(false);
+      setPolarInput(true);
+    }
   };
 
   return (
     <div className="flex flex-col gap-2">
       <h1 className="text-2xl">Entrada de dados</h1>
       <ContainerPanel>
-        <label>
-          <input
-            type="checkbox"
-            checked={typeCoordinates}
-            onChange={handleCheckboxChange}
-          />
-          {!typeCoordinates
-            ? "Entrada com raio e ângulo"
-            : "Entrada com seno e cosseno"}
-        </label>
+        <div className="flex gap-1">
+          <label>
+            <input
+              type="checkbox"
+              checked={cartesianInput}
+              onChange={() => handleCheckboxChange("cartesian")}
+            />
+            Coordenada cartesiana
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              checked={polarInput}
+              onChange={() => handleCheckboxChange("polar")}
+            />
+            Cordenada polar
+          </label>
+        </div>
         <div className="flex gap-12">
           <div className="flex flex-col gap-2 items-end">
-            {!typeCoordinates ? (
+            {cartesianInput ? (
               <div>
                 X: <InputNumber value={x} onChange={setX} />
               </div>
@@ -71,7 +99,7 @@ export default function InputData() {
           </div>
 
           <div className="flex flex-col gap-2 items-end">
-            {!typeCoordinates ? (
+            {cartesianInput ? (
               <div>
                 Y: <InputNumber value={y} onChange={setY} />
               </div>

@@ -5,22 +5,17 @@ import { useData } from "../../context/dataProvider";
 import { useEffect, useState } from "react";
 
 export default function Radar() {
-  const { dataAirplane, setDataAirplane } = useData();
+  const { dataAirplane } = useData();
   const [coordinates, setCoordinates] = useState(dataAirplane);
 
   useEffect(() => {
     const newConfig = dataAirplane.map((item) => {
       return {
-        x: item.hasOwnProperty("x")
-          ? item.x
-          : item.radius * Math.cos((item.angle * Math.PI) / 180),
-        y: item.hasOwnProperty("y")
-          ? item.y
-          : item.radius * Math.sin((item.angle * Math.PI) / 180),
+        x: item.x,
+        y: item.y,
         direction: item.direction,
       };
     });
-    console.log("oi", newConfig);
     setCoordinates(newConfig);
   }, [dataAirplane]);
 

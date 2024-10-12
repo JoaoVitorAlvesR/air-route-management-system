@@ -46,10 +46,10 @@ export default function DataGrid() {
                         />
                       </td>
                       <td className="px-4 py-2">{item.id}</td>
-                      <td className="px-4 py-2">{item.x}</td>
-                      <td className="px-4 py-2">{item.y}</td>
-                      <td className="px-4 py-2">{item.radius}</td>
-                      <td className="px-4 py-2">{item.angle}</td>
+                      <td className="px-4 py-2">{item.x.toFixed(2)}</td>
+                      <td className="px-4 py-2">{item.y.toFixed(2)}</td>
+                      <td className="px-4 py-2">{item.radius.toFixed(2)}</td>
+                      <td className="px-4 py-2">{item.angle.toFixed(2)}</td>
                       <td className="px-4 py-2">{item.speed}</td>
                       <td className="px-4 py-2">{item.direction}</td>
                     </tr>

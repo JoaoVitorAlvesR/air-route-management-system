@@ -13,7 +13,7 @@ export default function Home({ pageProps }) {
   return (
     <DataProvider>
       <div {...pageProps}>
-        <div className="flex flex-col pl-40 pt-10 gap-10">
+        <div className="flex flex-col items-center pt-10 gap-10">
           <div className="flex gap-6">
             <InputData />
             <TransformationFunctions />

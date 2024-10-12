@@ -53,7 +53,6 @@ export const CartesianPlan = ({ coordinates }: CartesianPlanProps) => {
         data: coordinates,
         backgroundColor: "#000",
         rotation: ({ raw }) => {
-          console.log(raw.direction);
           return 360 - raw.direction;
         },
         borderWidth: false,
