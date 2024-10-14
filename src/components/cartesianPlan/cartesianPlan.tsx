@@ -12,7 +12,7 @@ import {
 
 import { Scatter } from "react-chartjs-2";
 
-import Airplane from "../../icons/airplane.png";
+import Airplane from "../../../public/icons/airplane3.svg";
 import { useEffect, useState } from "react";
 
 ChartJS.register(
@@ -26,7 +26,13 @@ ChartJS.register(
 );
 
 interface CartesianPlanProps {
-  coordinates: { x: number; y: number; direction: number }[];
+  coordinates: {
+    id: number;
+    x: number;
+    y: number;
+    direction: number;
+    color: string;
+  }[];
 }
 
 export const CartesianPlan = ({ coordinates }: CartesianPlanProps) => {
@@ -39,19 +45,46 @@ export const CartesianPlan = ({ coordinates }: CartesianPlanProps) => {
     null
   );
 
+  const [airplaneImages, setAirplaneImages] = useState<HTMLImageElement[]>([]);
+
   useEffect(() => {
-    const img = new Image();
-    img.src = Airplane.src;
-    img.onload = () => {
-      setAirplaneImage(img);
+    const loadAndModifySVG = async (color: string) => {
+      const response = await fetch("/icons/airplane3.svg");
+      const svgText = await response.text();
+
+      const modifiedSvgText = svgText.replace(
+        /fill:#030104;/g,
+        `fill:${color}`
+      );
+
+      const svgBlob = new Blob([modifiedSvgText], { type: "image/svg+xml" });
+      const svgUrl = URL.createObjectURL(svgBlob);
+
+      const img = new Image();
+      img.src = svgUrl;
+
+      return new Promise<HTMLImageElement>((resolve) => {
+        img.onload = () => resolve(img);
+      });
     };
-  }, []);
+
+    const loadImages = async () => {
+      const images = await Promise.all(
+        coordinates.map(({ color }) => loadAndModifySVG(color))
+      );
+      setAirplaneImages(images);
+    };
+
+    loadImages();
+  }, [coordinates]);
 
   const chartData = {
     datasets: [
       {
         data: coordinates,
-        backgroundColor: "#000",
+        backgroundColor: ({ raw }) => {
+          return raw.color || "#000";
+        },
         rotation: ({ raw }) => {
           return 360 - raw.direction;
         },
@@ -59,8 +92,11 @@ export const CartesianPlan = ({ coordinates }: CartesianPlanProps) => {
         showLine: false,
         pointRadius: 10,
         hoverRadius: 10,
-        pointStyle: (context: { dataIndex: number }) =>
-          context.dataIndex === 0 ? "circle" : airplaneImage,
+        pointStyle: (context: { dataIndex: number }) => {
+          return context.dataIndex === 0
+            ? "circle"
+            : airplaneImages[context.dataIndex];
+        },
       },
     ],
   };
@@ -74,6 +110,14 @@ export const CartesianPlan = ({ coordinates }: CartesianPlanProps) => {
       },
       title: {
         display: false,
+      },
+      tooltip: {
+        enabled: true,
+        callbacks: {
+          label: function ({ raw }) {
+            return `Id: ${raw.id}, Direção: ${raw.direction}°, X: ${raw.x}, Y: ${raw.y}`;
+          },
+        },
       },
     },
     interaction: {
