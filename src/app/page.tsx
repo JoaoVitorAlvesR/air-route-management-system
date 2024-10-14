@@ -8,30 +8,33 @@ import TrackingFunctions from "./trackingFunctions/page";
 import TransformationFunctions from "./transformationFunctions/page";
 
 import { DataProvider } from "../context/dataProvider";
+import { SelectedItemsProvider } from "@/context/selectedItemsProvider";
 
 export default function Home({ pageProps }) {
   return (
-    <DataProvider>
-      <div {...pageProps}>
-        <div className="flex flex-col items-center pt-10 gap-10">
-          <div className="flex gap-6">
-            <InputData />
-            <TransformationFunctions />
-            <TrackingFunctions />
-          </div>
-
-          <div className="flex gap-10">
-            <div className="flex flex-col">
-              <DataGrid />
+    <SelectedItemsProvider>
+      <DataProvider>
+        <div {...pageProps}>
+          <div className="flex flex-col items-center pt-10 gap-10">
+            <div className="flex gap-6">
+              <InputData />
+              <TransformationFunctions />
+              <TrackingFunctions />
             </div>
 
-            <Radar />
-            <Report />
-          </div>
+            <div className="flex gap-10">
+              <div className="flex flex-col">
+                <DataGrid />
+              </div>
 
-          <div></div>
+              <Radar />
+              <Report />
+            </div>
+
+            <div></div>
+          </div>
         </div>
-      </div>
-    </DataProvider>
+      </DataProvider>
+    </SelectedItemsProvider>
   );
 }

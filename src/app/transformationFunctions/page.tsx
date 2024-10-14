@@ -1,7 +1,8 @@
 import { ContainerPanel } from "@/components";
 import TranslateXY from "./translateXY/page";
+
 import RotateXY from "./rotateXY/page";
-import EchelonXY from "./echelonXY/page";
+import ScalingXY from "./scalingXY/page";
 
 export default function TransformationFunctions() {
   return (
@@ -10,10 +11,9 @@ export default function TransformationFunctions() {
 
       <div className="flex flex-col gap-2">
         <div className="flex gap-2">
-          <TranslateXY />
-          <RotateXY />
+          <TranslateXY /> <ScalingXY />
         </div>
-        <EchelonXY />
+        <RotateXY />
       </div>
     </div>
   );

@@ -5,31 +5,31 @@ import { useSelectedItems } from "@/context/selectedItemsProvider";
 import CoordinatesConversion from "@/utils/coordinatesConversion";
 import { useState } from "react";
 
-export default function TranslateXY() {
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
+export default function ScalingXY() {
+  const [x, setX] = useState(1);
+  const [y, setY] = useState(1);
 
   const { checkedItems } = useSelectedItems();
   const { dataAirplane, setDataAirplane } = useData();
 
-  const handleTranslate = () => {
-    const translatedData = dataAirplane.map((item) => {
+  const handleScale = () => {
+    const scaledData = dataAirplane.map((item) => {
       if (checkedItems.includes(item.id)) {
-        const transferedCoordinates = {
-          x: item.x + (x === "" ? 0 : parseFloat(x)),
-          y: item.y + (y === "" ? 0 : parseFloat(y)),
+        const scaledCoordinates = {
+          x: item.x * (x === "" ? 1 : parseFloat(x)), // Fator de escala em x, pode ser negativo
+          y: item.y * (y === "" ? 1 : parseFloat(y)), // Fator de escala em y, pode ser negativo
         };
         return {
           ...item,
-          ...CoordinatesConversion(transferedCoordinates),
+          ...CoordinatesConversion(scaledCoordinates),
         };
       }
       return item;
     });
 
-    setX(0);
-    setY(0);
-    setDataAirplane(translatedData);
+    setX(1); // Resetando os valores de x para o padrão 1 (sem escala)
+    setY(1); // Resetando os valores de y para o padrão 1 (sem escala)
+    setDataAirplane(scaledData);
   };
 
   return (
@@ -48,10 +48,10 @@ export default function TranslateXY() {
         </div>
       </div>
       <button
-        onClick={handleTranslate}
+        onClick={handleScale}
         className="bg-purple-950 text-white rounded-lg p-2"
       >
-        Transladar
+        Escalonar
       </button>
     </ContainerPanel>
   );

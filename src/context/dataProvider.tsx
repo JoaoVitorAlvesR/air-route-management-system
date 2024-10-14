@@ -21,6 +21,8 @@ export const DataProvider = ({ children }: any) => {
     setY(0);
     setRadius(0);
     setAngle(0);
+    setDirection(0);
+    setSpeed(0);
   }, [dataAirplane]);
 
   const [coordinates, setCoordinates] = useState([

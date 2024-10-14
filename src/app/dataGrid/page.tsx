@@ -1,22 +1,25 @@
 "use client";
 import { ContainerPanel } from "@/components";
 import { useData } from "@/context/dataProvider";
+import { useSelectedItems } from "@/context/selectedItemsProvider";
 import { useState } from "react";
 
 export default function DataGrid() {
-  const [checkedItems, setCheckedItems] = useState({});
+  const { checkedItems, setCheckedItems } = useSelectedItems();
   const { dataAirplane } = useData();
-  console.log("dataAirplane", dataAirplane);
+
   const handleCheckboxChange = (id) => {
-    setCheckedItems((prevState) => ({
-      ...prevState,
-      [id]: !prevState[id],
-    }));
+    if (checkedItems.includes(id)) {
+      setCheckedItems((prevState) => prevState.filter((item) => item !== id));
+    } else {
+      setCheckedItems((prevState) => [...prevState, id]);
+    }
   };
 
+  console.log("checkedItems", checkedItems);
   return (
     <div className="flex flex-col gap-2">
-      <h1 className="text-2xl">Data Grid</h1>
+      <h1 className="text-2xl">Lista de aviões</h1>
       <ContainerPanel>
         <div className="overflow-x-auto p-4">
           <table className="min-w-full table-auto border-collapse border border-gray-300">
@@ -40,7 +43,7 @@ export default function DataGrid() {
                       <td className="px-4 py-2">
                         <input
                           type="checkbox"
-                          checked={!!checkedItems[item.id]}
+                          checked={checkedItems.includes(item.id)}
                           onChange={() => handleCheckboxChange(item.id)}
                           className="h-4 w-4 text-blue-600 border-gray-300 rounded"
                         />

@@ -5,11 +5,13 @@ import { useState } from "react";
 export default function RotateXY() {
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
+  const [angle, setAngle] = useState(0);
 
   const handleInsert = () => {
     console.log("Inserting data");
     console.log("x:", x);
     console.log("y:", y);
+    console.log("angle:", angle);
   };
 
   return (
@@ -17,13 +19,14 @@ export default function RotateXY() {
       <div className="flex gap-2">
         <div className="flex flex-col gap-2 items-end">
           <div>
-            X: <InputNumber value={x} onChange={setX} />
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-2 items-end">
-          <div>
-            Y: <InputNumber value={y} onChange={setY} />
+            Ângulo <InputNumber value={angle} onChange={setAngle} />
+            <div className="flex gap-4">
+              Centro de rotação:
+              <div className="flex gap-2">
+                Y: <InputNumber value={y} onChange={setY} />
+                X: <InputNumber value={x} onChange={setX} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -31,7 +34,7 @@ export default function RotateXY() {
         onClick={handleInsert}
         className="bg-purple-950 text-white rounded-lg p-2"
       >
-        Escalonar
+        Rotacionar
       </button>
     </ContainerPanel>
   );

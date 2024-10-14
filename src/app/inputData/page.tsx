@@ -27,26 +27,21 @@ export default function InputData() {
   const [polarInput, setPolarInput] = useState(false);
 
   const handleInsert = () => {
-    const insetData = cartesianInput ? { x, y } : { radius, angle };
+    const insetData = cartesianInput
+      ? { x: x === "" ? 0 : x, y: y === "" ? 0 : y }
+      : { radius, angle };
 
-    const completeCoordinates = CoordinatesConversion(
-      insetData,
-      cartesianInput
-    );
+    const completeCoordinates = CoordinatesConversion(insetData, polarInput);
     setDataAirplane([
       ...dataAirplane,
       {
         id: dataAirplane.length,
         color: gerarCorHexadecimal(),
-        direction,
-        speed,
+        direction: direction === "" ? 0 : direction,
+        speed: speed === "" ? 0 : speed,
         ...completeCoordinates,
       },
     ]);
-    setX;
-    setY;
-    setRadius;
-    setAngle;
   };
 
   const handleCheckboxChange = (stringType: string) => {
