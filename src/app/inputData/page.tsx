@@ -3,6 +3,7 @@ import { ContainerPanel, InputNumber } from "@/components";
 import { useEffect, useState } from "react";
 import { useData } from "../../context/dataProvider";
 import CoordinatesConversion from "@/utils/coordinatesConversion";
+import gerarCorHexadecimal from "@/utils/randomColor";
 
 export default function InputData() {
   const {
@@ -36,6 +37,7 @@ export default function InputData() {
       ...dataAirplane,
       {
         id: dataAirplane.length,
+        color: gerarCorHexadecimal(),
         direction,
         speed,
         ...completeCoordinates,
@@ -76,7 +78,7 @@ export default function InputData() {
               checked={polarInput}
               onChange={() => handleCheckboxChange("polar")}
             />
-            Cordenada polar
+            Coordenada polar
           </label>
         </div>
         <div className="flex gap-12">

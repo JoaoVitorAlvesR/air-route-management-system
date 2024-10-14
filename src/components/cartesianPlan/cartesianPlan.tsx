@@ -12,7 +12,7 @@ import {
 
 import { Scatter } from "react-chartjs-2";
 
-import Airplane from "../../icons/airplane2.png";
+import Airplane from "../../icons/airplane.png";
 import { useEffect, useState } from "react";
 
 ChartJS.register(

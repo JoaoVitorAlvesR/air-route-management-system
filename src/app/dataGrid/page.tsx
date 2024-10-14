@@ -5,8 +5,8 @@ import { useState } from "react";
 
 export default function DataGrid() {
   const [checkedItems, setCheckedItems] = useState({});
-  const { dataAirplane, setDataAirplane } = useData();
-
+  const { dataAirplane } = useData();
+  console.log("dataAirplane", dataAirplane);
   const handleCheckboxChange = (id) => {
     setCheckedItems((prevState) => ({
       ...prevState,
@@ -45,7 +45,12 @@ export default function DataGrid() {
                           className="h-4 w-4 text-blue-600 border-gray-300 rounded"
                         />
                       </td>
-                      <td className="px-4 py-2">{item.id}</td>
+                      <td
+                        className={"px-4 py-2 flex justify-center "}
+                        style={{ backgroundColor: item.color }}
+                      >
+                        {item.id}
+                      </td>
                       <td className="px-4 py-2">{item.x.toFixed(2)}</td>
                       <td className="px-4 py-2">{item.y.toFixed(2)}</td>
                       <td className="px-4 py-2">{item.radius.toFixed(2)}</td>
