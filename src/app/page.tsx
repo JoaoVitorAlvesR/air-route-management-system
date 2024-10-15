@@ -23,9 +23,7 @@ export default function Home({ pageProps }) {
             </div>
 
             <div className="flex gap-10">
-              <div className="flex flex-col">
-                <DataGrid />
-              </div>
+              <DataGrid />
 
               <Radar />
               <Report />

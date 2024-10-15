@@ -12,7 +12,6 @@ import {
 
 import { Scatter } from "react-chartjs-2";
 
-import Airplane from "../../../public/icons/airplane3.svg";
 import { useEffect, useState } from "react";
 
 ChartJS.register(
@@ -36,14 +35,10 @@ interface CartesianPlanProps {
 }
 
 export const CartesianPlan = ({ coordinates }: CartesianPlanProps) => {
-  const xMin = Math.min(...coordinates.map((coord) => coord.x)) - 10;
-  const xMax = Math.max(...coordinates.map((coord) => coord.x)) + 10;
-  const yMin = Math.min(...coordinates.map((coord) => coord.y)) - 10;
-  const yMax = Math.max(...coordinates.map((coord) => coord.y)) + 10;
-
-  const [airplaneImage, setAirplaneImage] = useState<HTMLImageElement | null>(
-    null
-  );
+  const xMin = Math.ceil(Math.min(...coordinates.map((coord) => coord.x))) - 10;
+  const xMax = Math.ceil(Math.max(...coordinates.map((coord) => coord.x))) + 10;
+  const yMin = Math.ceil(Math.min(...coordinates.map((coord) => coord.y))) - 10;
+  const yMax = Math.ceil(Math.max(...coordinates.map((coord) => coord.y))) + 10;
 
   const [airplaneImages, setAirplaneImages] = useState<HTMLImageElement[]>([]);
 
@@ -115,7 +110,9 @@ export const CartesianPlan = ({ coordinates }: CartesianPlanProps) => {
         enabled: true,
         callbacks: {
           label: function ({ raw }) {
-            return `Id: ${raw.id}, Direção: ${raw.direction}°, X: ${raw.x}, Y: ${raw.y}`;
+            return `Id: ${raw.id}, Direção: ${
+              raw.direction
+            }°, X: ${raw.x.toFixed()}, Y: ${raw.y.toFixed()}`;
           },
         },
       },
