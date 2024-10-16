@@ -16,7 +16,6 @@ export default function DataGrid() {
     }
   };
 
-  console.log("checkedItems", checkedItems);
   return (
     <div className="flex flex-col gap-2">
       <h1 className="text-2xl">Lista de aviões</h1>
@@ -49,9 +48,18 @@ export default function DataGrid() {
                         />
                       </td>
                       <td
-                        className={"px-4 py-2 flex justify-center "}
-                        style={{ backgroundColor: item.color }}
+                        className={
+                          "px-4 py-2 flex justify-center items-center gap-2 "
+                        }
                       >
+                        <div
+                          style={{
+                            height: "15px",
+                            width: "15px",
+                            borderRadius: "50%",
+                            backgroundColor: item.color,
+                          }}
+                        />
                         {item.id}
                       </td>
                       <td className="px-4 py-2">{item.x.toFixed(2)}</td>
