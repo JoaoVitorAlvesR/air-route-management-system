@@ -1,0 +1,33 @@
+Passo 1: Achar a equação da reta "y = mx + n" com as cordenadas e ângulo;
+
+  1.1 Descobrir coeficiente angular 'm':
+  m = tg α
+
+  exemplo: x=5, y=5, angulo= 45
+  m = tg 45;
+  m = 1;
+  exemplo: x=5, y=0, angulo= 90
+  m = tg 90;
+  m = ;
+
+  1.2 Descobrir coeficiente linear 'n', que é o valor de y quando o x = 0:
+  y = mx + n
+  n = -1 * (y - mx) 
+  exemplo: x=5, y=5, angulo= 45, m=1
+  y = mx + n
+  5 = 1*5 + n
+  5 - 5 = n
+  n = 0;
+
+  sendo assim, equação da reta de x=5, y=5, angulo= 45 é:
+  y = 1*x + 0
+
+Passo 2: Descobrir ponto de intersecção
+
+
+
+
+
+
+
+
