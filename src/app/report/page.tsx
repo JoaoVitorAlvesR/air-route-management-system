@@ -92,9 +92,9 @@ export default function Report() {
                     />
                     <div className="flex gap-2 items-center">
                       <div>
-                        Aeronave {item.plane1} está a{" "}
-                        {item.distanceBetweenPlanes.toFixed(2)} km de distância
-                        da Aeronave {item.plane2}
+                        Aeronave {item.plane1} e Aeronave {item.plane2} passam
+                        no ponto comum (x: {item.x}, y: {item.y}) com diferença
+                        de {item.time} segundos
                       </div>
                     </div>
                   </div>

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 export default function Radar() {
   const { dataAirplane } = useData();
   const [coordinates, setCoordinates] = useState(dataAirplane);
-
+  console.log("dataAirplane", dataAirplane);
   useEffect(() => {
     const newConfig = dataAirplane.map((item) => {
       return {

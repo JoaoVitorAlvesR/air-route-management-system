@@ -32,6 +32,7 @@ export default function InputData() {
       : { radius, angle };
 
     const completeCoordinates = CoordinatesConversion(insetData, polarInput);
+
     setDataAirplane([
       ...dataAirplane,
       {
