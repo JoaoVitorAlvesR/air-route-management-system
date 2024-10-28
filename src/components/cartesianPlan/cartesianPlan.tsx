@@ -132,6 +132,7 @@ export const CartesianPlan = ({ coordinates }: CartesianPlanProps) => {
         },
         grid: {
           color: (ctx) => (ctx.tick.value === 0 ? "#59b672" : "#000"),
+          lineWidth: (ctx) => (ctx.tick.value === 0 ? 3 : 1),
         },
       },
       y: {
@@ -143,6 +144,7 @@ export const CartesianPlan = ({ coordinates }: CartesianPlanProps) => {
         },
         grid: {
           color: (ctx) => (ctx.tick.value === 0 ? "#59b672" : "#000"),
+          lineWidth: (ctx) => (ctx.tick.value === 0 ? 3 : 1),
         },
       },
     },
