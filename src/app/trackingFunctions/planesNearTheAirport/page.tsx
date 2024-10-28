@@ -10,8 +10,6 @@ export default function PlanesNearTheAirport() {
   const { dataAirplane } = useData();
   const { setReportAirport, setTypeOfReport } = useReport();
 
-  console.log("dataAirplane", dataAirplane);
-
   const handleFindPlanesNearTheAiport = () => {
     setMinDistance(minDistance === "" ? 0 : parseFloat(minDistance));
     const planesNearTheAirport = dataAirplane
@@ -28,7 +26,6 @@ export default function PlanesNearTheAirport() {
         };
       })
       .filter((plane, index) => {
-        console.log("minDistance", minDistance);
         return plane.distanceFromAirport <= minDistance && index > 0;
       });
 

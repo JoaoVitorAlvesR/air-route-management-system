@@ -35,11 +35,11 @@ interface CartesianPlanProps {
 }
 
 export const CartesianPlan = ({ coordinates }: CartesianPlanProps) => {
-  const xMin = Math.ceil(Math.min(...coordinates.map((coord) => coord.x))) - 10;
-  const xMax = Math.ceil(Math.max(...coordinates.map((coord) => coord.x))) + 10;
-  const yMin = Math.ceil(Math.min(...coordinates.map((coord) => coord.y))) - 10;
-  const yMax = Math.ceil(Math.max(...coordinates.map((coord) => coord.y))) + 10;
-  console.log("coordinates", coordinates);
+  const xMin = Math.ceil(Math.min(...coordinates.map((coord) => coord.x))) - 50;
+  const xMax = Math.ceil(Math.max(...coordinates.map((coord) => coord.x))) + 50;
+  const yMin = Math.ceil(Math.min(...coordinates.map((coord) => coord.y))) - 50;
+  const yMax = Math.ceil(Math.max(...coordinates.map((coord) => coord.y))) + 50;
+
   const [airplaneImages, setAirplaneImages] = useState<HTMLImageElement[]>([]);
 
   useEffect(() => {
@@ -110,7 +110,6 @@ export const CartesianPlan = ({ coordinates }: CartesianPlanProps) => {
         enabled: true,
         callbacks: {
           label: function ({ raw }) {
-            console.log("label", raw);
             return `Id: ${raw.id}, Direção: ${
               raw.direction
             }°, X: ${raw.x.toFixed(2)}, Y: ${raw.y.toFixed(2)}`;

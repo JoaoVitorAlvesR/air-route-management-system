@@ -13,7 +13,12 @@ type Ponto = {
   direction: number;
 };
 
+//func
 function calculateCollisionPoint(pontoA: Ponto, pontoB: Ponto) {
+  if (pontoA.x === pontoB.x && pontoA.y === pontoB.y) {
+    return { diferenceBetweenTimes: 0, x: pontoA.x, y: pontoA.y };
+  }
+
   function calculateM(direction: number, x: number, y: number) {
     if (direction === 90 || direction === 270) {
       return { m: Infinity, equation: `x = ${x}` };
@@ -34,6 +39,32 @@ function calculateCollisionPoint(pontoA: Ponto, pontoB: Ponto) {
       const n = parseFloat((y - m * x).toFixed(2));
       return { n, equation: `y = ${m} * x + ${n}` };
     }
+  }
+
+  function calculatesDestinationViability(speed, angle, xi, yi, xf, yf) {
+    if (xi === xf && yi === yf) {
+      return true; // Retornar true se o destino é o mesmo que a origem
+    }
+    // Calcular as mudanças nas coordenadas
+    const deltaX = speed * Math.cos(angle);
+    const deltaY = speed * Math.sin(angle);
+
+    console.log("Math.sign(deltaX)", Math.sign(deltaX)); // -1, 0, 1
+    console.log("Math.sign(deltaY)", Math.sign(deltaY)); // -1, 0, 1
+    const verifySignX = Math.sign(deltaX);
+    const verifySignY = Math.sign(deltaY);
+
+    // Calcular as diferenças entre as coordenadas finais e iniciais
+    const diffX = xf - xi;
+    const diffY = yf - yi;
+
+    // Verificar a viabilidade do destino
+    const viableX =
+      verifySignX === Math.sign(diffX) || (deltaX === 0 && diffX === 0);
+    const viableY =
+      verifySignY === Math.sign(diffY) || (deltaY === 0 && diffY === 0);
+
+    return viableX && viableY; // Retorna verdadeiro se ambos os eixos forem viáveis
   }
 
   function caculateTimeToDestination(xi, yi, xf, yf, speed) {
@@ -74,12 +105,18 @@ function calculateCollisionPoint(pontoA: Ponto, pontoB: Ponto) {
     mB === Infinity
   );
 
-  console.log("Equação da linha de A:", fullEquationA || equationA);
-  console.log("Equação da linha de B:", fullEquationB || equationB);
-  console.log("mA", mA);
-  console.log("mB", mB);
-  console.log("nA", nA);
-  console.log("nB", nB);
+  const vAx = pontoA.speed * Math.cos(pontoA.direction * (Math.PI / 180));
+  const vAy = pontoA.speed * Math.sin(pontoA.direction * (Math.PI / 180));
+
+  const vBx = pontoB.speed * Math.cos(pontoB.direction * (Math.PI / 180));
+  const vBy = pontoB.speed * Math.sin(pontoB.direction * (Math.PI / 180));
+
+  // console.log("Equação da linha de A:", fullEquationA || equationA);
+  // console.log("Equação da linha de B:", fullEquationB || equationB);
+  // console.log("mA", mA);
+  // console.log("mB", mB);
+  // console.log("nA", nA);
+  // console.log("nB", nB);
 
   // Calcular o ponto de colisão
   let x, y;
@@ -90,7 +127,7 @@ function calculateCollisionPoint(pontoA: Ponto, pontoB: Ponto) {
     x = parseFloat(pontoB.x);
     y = parseFloat(mA * x + nA);
   } else if (mA === mB && nA === nB) {
-    console.log("são na mesma linha, podem colidir ou não");
+    // console.log("são na mesma linha, podem colidir ou não");
     // se o angulo for igual
     if (
       pontoA.x > pontoB.x &&
@@ -110,26 +147,11 @@ function calculateCollisionPoint(pontoA: Ponto, pontoB: Ponto) {
       x = pontoB.x;
       y = pontoB.y;
     } else if (
-      pontoB.x === pontoA.x &&
-      pontoB.y === pontoA.y &&
-      pontoA.direction === pontoB.direction
-    ) {
-      console.log("cai aqui 3");
-      //ja colidiu
-      x = pontoA.x;
-      y = pontoA.y;
-    } else if (
       pontoA.speed > pontoB.speed ||
       pontoB.speed > pontoA.speed ||
       pontoA.direction !== pontoB.direction
     ) {
       //vai colidir uma hora
-      const vAx = pontoA.speed * Math.cos(pontoA.direction * (Math.PI / 180));
-      const vAy = pontoA.speed * Math.sin(pontoA.direction * (Math.PI / 180));
-
-      const vBx = pontoB.speed * Math.cos(pontoB.direction * (Math.PI / 180));
-      const vBy = pontoB.speed * Math.sin(pontoB.direction * (Math.PI / 180));
-
       const tx = (pontoB.x - pontoA.x) / (vAx - vBx);
       const ty = (pontoB.y - pontoA.y) / (vAy - vBy);
 
@@ -143,6 +165,22 @@ function calculateCollisionPoint(pontoA: Ponto, pontoB: Ponto) {
 
   console.log("Ponto de colisão:", { x, y });
 
+  const isPossibleAToThePoint = calculatesDestinationViability(
+    pontoA.speed,
+    pontoA.direction * (Math.PI / 180),
+    pontoA.x,
+    pontoA.y,
+    x,
+    y
+  );
+  const isPossibleBToThePoint = calculatesDestinationViability(
+    pontoB.speed,
+    pontoB.direction * (Math.PI / 180),
+    pontoB.x,
+    pontoB.y,
+    x,
+    y
+  );
   //calcular o tempo pra chegar no ponto
   const timeToDestinationA = caculateTimeToDestination(
     pontoA.x,
@@ -161,12 +199,19 @@ function calculateCollisionPoint(pontoA: Ponto, pontoB: Ponto) {
 
   console.log("timeToDestinationA", timeToDestinationA);
   console.log("timeToDestinationB", timeToDestinationB);
+  console.log("isPossibleAToThePoint", isPossibleAToThePoint);
+  console.log("isPossibleBToThePoint", isPossibleBToThePoint);
 
-  const diferenceBetweenTimes = parseFloat(
-    Math.abs(timeToDestinationA - timeToDestinationB).toFixed(2)
-  );
-  console.log("diferenceBetweenTimes", diferenceBetweenTimes);
-  return { diferenceBetweenTimes, x, y };
+  if (isPossibleAToThePoint && isPossibleBToThePoint) {
+    const diferenceBetweenTimes = parseFloat(
+      Math.abs(timeToDestinationA - timeToDestinationB).toFixed(2)
+    );
+
+    console.log("diferenceBetweenTimes", diferenceBetweenTimes);
+    return { diferenceBetweenTimes, x, y };
+  } else {
+    return;
+  }
 }
 // func
 
@@ -201,9 +246,9 @@ export default function OnACollisionCourse() {
         };
 
         const timeOfCollision = calculateCollisionPoint(pontoA, pontoB);
-        console.log("cai aqui1?", timeOfCollision.diferenceBetweenTimes, time);
+        console.log("cai aqui1?", timeOfCollision);
 
-        if (timeOfCollision.diferenceBetweenTimes <= time) {
+        if (timeOfCollision?.diferenceBetweenTimes <= time) {
           collisionPlanes.push({
             plane1: plane.id,
             plane2: plane2.id,

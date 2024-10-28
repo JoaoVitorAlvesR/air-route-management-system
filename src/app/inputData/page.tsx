@@ -39,7 +39,7 @@ export default function InputData() {
         id: dataAirplane.length,
         color: gerarCorHexadecimal(),
         direction: direction === "" ? 0 : direction,
-        speed: speed === "" ? 0 : speed,
+        speed: speed === "" ? 0 : Math.abs(speed),
         ...completeCoordinates,
       },
     ]);
