@@ -111,13 +111,6 @@ function calculateCollisionPoint(pontoA: Ponto, pontoB: Ponto) {
   const vBx = pontoB.speed * Math.cos(pontoB.direction * (Math.PI / 180));
   const vBy = pontoB.speed * Math.sin(pontoB.direction * (Math.PI / 180));
 
-  // console.log("Equação da linha de A:", fullEquationA || equationA);
-  // console.log("Equação da linha de B:", fullEquationB || equationB);
-  // console.log("mA", mA);
-  // console.log("mB", mB);
-  // console.log("nA", nA);
-  // console.log("nB", nB);
-
   // Calcular o ponto de colisão
   let x, y;
   if (mA === Infinity) {
@@ -127,7 +120,6 @@ function calculateCollisionPoint(pontoA: Ponto, pontoB: Ponto) {
     x = parseFloat(pontoB.x);
     y = parseFloat(mA * x + nA);
   } else if (mA === mB && nA === nB) {
-    // console.log("são na mesma linha, podem colidir ou não");
     // se o angulo for igual
     if (
       pontoA.x > pontoB.x &&
