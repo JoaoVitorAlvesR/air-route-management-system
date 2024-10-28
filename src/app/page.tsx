@@ -11,7 +11,7 @@ import { DataProvider } from "../context/dataProvider";
 import { SelectedItemsProvider } from "@/context/selectedItemsProvider";
 import { ReportProvider } from "@/context/reportProvider";
 
-export default function Home({ pageProps }) {
+export default function Home({ pageProps }: any) {
   return (
     <ReportProvider>
       <SelectedItemsProvider>
