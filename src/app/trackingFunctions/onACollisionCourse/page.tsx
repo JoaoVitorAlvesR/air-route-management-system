@@ -92,21 +92,37 @@ function calculateCollisionPoint(pontoA: Ponto, pontoB: Ponto) {
   } else if (mA === mB && nA === nB) {
     console.log("são na mesma linha, podem colidir ou não");
     // se o angulo for igual
-    if (pontoA.x > pontoB.x && pontoA.speed >= pontoB.speed) {
+    if (
+      pontoA.x > pontoB.x &&
+      pontoA.speed >= pontoB.speed &&
+      pontoA.direction === pontoB.direction
+    ) {
       // A ta na frente de B
       // A ta indo mais rápido que B não há colisão
       x = pontoA.x;
       y = pontoA.y;
-    } else if (pontoA.x < pontoB.x && pontoB.speed >= pontoA.speed) {
+    } else if (
+      pontoA.x < pontoB.x &&
+      pontoB.speed >= pontoA.speed &&
+      pontoA.direction === pontoB.direction
+    ) {
       // B ta indo mais rápido que A não há colisão
       x = pontoB.x;
       y = pontoB.y;
-    } else if (pontoB.x === pontoA.x && pontoB.y === pontoA.y) {
+    } else if (
+      pontoB.x === pontoA.x &&
+      pontoB.y === pontoA.y &&
+      pontoA.direction === pontoB.direction
+    ) {
       console.log("cai aqui 3");
       //ja colidiu
       x = pontoA.x;
       y = pontoA.y;
-    } else if (pontoA.speed > pontoB.speed || pontoB.speed > pontoA.speed) {
+    } else if (
+      pontoA.speed > pontoB.speed ||
+      pontoB.speed > pontoA.speed ||
+      pontoA.direction !== pontoB.direction
+    ) {
       //vai colidir uma hora
       const vAx = pontoA.speed * Math.cos(pontoA.direction * (Math.PI / 180));
       const vAy = pontoA.speed * Math.sin(pontoA.direction * (Math.PI / 180));
