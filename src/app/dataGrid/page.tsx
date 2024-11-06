@@ -30,7 +30,7 @@ export default function DataGrid() {
                 <th className="px-4 py-2 border-b">Y</th>
                 <th className="px-4 py-2 border-b">R</th>
                 <th className="px-4 py-2 border-b">A</th>
-                <th className="px-4 py-2 border-b">V</th>
+                <th className="px-4 py-2 border-b">V (km/h)</th>
                 <th className="px-4 py-2 border-b">D</th>
               </tr>
             </thead>

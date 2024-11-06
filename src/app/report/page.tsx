@@ -92,10 +92,12 @@ export default function Report() {
                     />
                     <div className="flex gap-2 items-center">
                       <div>
-                        Aeronave {item.plane1} e Aeronave {item.plane2} passam
-                        no ponto comum (x: {item.x.toFixed(2)}, y:{" "}
-                        {item.y.toFixed(2)}) com diferença de {item.time}{" "}
-                        segundos
+                        {item.time === 0 && "HÁ COLISÃO: "}
+                        Aeronave {item.plane1} (tempo: {item.plane1Time}{" "}
+                        segundos) e Aeronave {item.plane2} (tempo:{" "}
+                        {item.plane2Time} segundos) passam no ponto comum (x:{" "}
+                        {item.x.toFixed(2)}, y: {item.y.toFixed(2)}) com
+                        diferença de {item.time} segundos
                       </div>
                     </div>
                   </div>

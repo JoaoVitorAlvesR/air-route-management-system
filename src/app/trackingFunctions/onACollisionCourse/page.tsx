@@ -16,7 +16,13 @@ type Ponto = {
 //func
 function calculateCollisionPoint(pontoA: Ponto, pontoB: Ponto) {
   if (pontoA.x === pontoB.x && pontoA.y === pontoB.y) {
-    return { diferenceBetweenTimes: 0, x: pontoA.x, y: pontoA.y };
+    return {
+      diferenceBetweenTimes: 0,
+      x: pontoA.x,
+      y: pontoA.y,
+      timeToDestinationA: 0,
+      timeToDestinationB: 0,
+    };
   }
 
   function calculateM(direction: number, x: number, y: number) {
@@ -200,7 +206,13 @@ function calculateCollisionPoint(pontoA: Ponto, pontoB: Ponto) {
     );
 
     console.log("diferenceBetweenTimes", diferenceBetweenTimes);
-    return { diferenceBetweenTimes, x, y };
+    return {
+      diferenceBetweenTimes,
+      x,
+      y,
+      timeToDestinationA,
+      timeToDestinationB,
+    };
   } else {
     return;
   }
@@ -244,6 +256,8 @@ export default function OnACollisionCourse() {
           collisionPlanes.push({
             plane1: plane.id,
             plane2: plane2.id,
+            plane1Time: timeOfCollision.timeToDestinationA,
+            plane2Time: timeOfCollision.timeToDestinationB,
             time: timeOfCollision.diferenceBetweenTimes,
             plane1Color: plane.color,
             plane2Color: plane2.color,

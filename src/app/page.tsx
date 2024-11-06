@@ -17,14 +17,14 @@ export default function Home({ pageProps }: any) {
       <SelectedItemsProvider>
         <DataProvider>
           <div {...pageProps}>
-            <div className="flex flex-col items-center pt-10 gap-10">
+            <div className="flex flex-col items-center pt-10 gap-10 pl-4 pr-4">
               <div className="flex gap-6">
                 <InputData />
                 <TransformationFunctions />
                 <TrackingFunctions />
               </div>
 
-              <div className="flex gap-10">
+              <div className="flex gap-4">
                 <DataGrid />
 
                 <Radar />
