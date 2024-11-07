@@ -14,28 +14,31 @@ export default function RotateXY() {
   const { dataAirplane, setDataAirplane } = useData();
 
   const handleRotate = () => {
-    // Definindo os valores de x, y e angle
-    setX(x === "" ? 0 : parseFloat(x));
-    setY(y === "" ? 0 : parseFloat(y));
-    setAngle(angle === "" ? 0 : parseFloat(angle));
-
     const rotatedData = dataAirplane.map((item) => {
       if (checkedItems.includes(item.id)) {
-        const degreesToRadians = (angle * Math.PI) / 180;
+        const radians = (angle * Math.PI) / 180;
+        const xRotation = parseFloat(x);
+        const yRotation = parseFloat(y);
 
-        const translatedX = x !== 0 ? item.x - x : item.x;
-        const translatedY = y !== 0 ? item.y - y : item.y;
-
+        // Transladar o ponto para a origem
+        const translatedX = item.x - xRotation;
+        const translatedY = item.y - yRotation;
+        console.log("x,y 1 ", xRotation, yRotation);
+        console.log("translatedX", translatedX, translatedY);
+        // Aplicar a rotação
         const rotatedX =
-          translatedX * Math.cos(degreesToRadians) -
-          translatedY * Math.sin(degreesToRadians);
+          translatedX * Math.cos(radians) - translatedY * Math.sin(radians);
         const rotatedY =
-          translatedX * Math.sin(degreesToRadians) +
-          translatedY * Math.cos(degreesToRadians);
+          translatedX * Math.sin(radians) + translatedY * Math.cos(radians);
 
-        const finalX = x !== 0 ? rotatedX + x : rotatedX;
-        const finalY = y !== 0 ? rotatedY + y : rotatedY;
+        console.log("rotatedX rotatedY", rotatedX, rotatedY);
+        console.log("x,y 2 ", xRotation, yRotation);
 
+        // Transladar o ponto de volta
+        const finalX = rotatedX + xRotation;
+        const finalY = rotatedY + yRotation;
+
+        console.log("ue", finalX, finalY);
         return {
           ...item,
           ...CoordinatesConversion({ x: finalX, y: finalY }),
@@ -43,7 +46,7 @@ export default function RotateXY() {
       }
       return item;
     });
-
+    console.log("rotatedData", rotatedData);
     setX(0);
     setY(0);
     setAngle(0);
@@ -60,8 +63,8 @@ export default function RotateXY() {
             <div className="flex gap-4">
               Centro de rotação:
               <div className="flex gap-2">
-                Y: <InputNumber value={y} onChange={setY} />
                 X: <InputNumber value={x} onChange={setX} />
+                Y: <InputNumber value={y} onChange={setY} />
               </div>
             </div>
           </div>
