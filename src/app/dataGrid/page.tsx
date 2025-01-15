@@ -24,7 +24,7 @@ export default function DataGrid() {
           <table className="min-w-full table-auto border-collapse border border-gray-300">
             <thead>
               <tr>
-                <th className="px-4 py-2 border-b">Selecionar</th>
+                <th className="px-4 py-2 border-b">Selecione</th>
                 <th className="px-4 py-2 border-b">ID</th>
                 <th className="px-4 py-2 border-b">X</th>
                 <th className="px-4 py-2 border-b">Y</th>
